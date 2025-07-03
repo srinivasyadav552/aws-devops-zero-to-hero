@@ -1,5 +1,5 @@
 # Accept a build-time argument for the base image (default is your Docker Hub image)
-ARG BASE_IMAGE=srinivasyadav552/python:3.8
+ARG BASE_IMAGE=srinivasyadav552/python:3.11
 FROM ${BASE_IMAGE}
 
 # Set the working directory inside the container
