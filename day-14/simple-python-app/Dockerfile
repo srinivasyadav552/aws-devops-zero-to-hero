@@ -1,23 +1,24 @@
-# Base image
-FROM python:3.8
+# Accept a build-time argument for the base image (default is your Docker Hub image)
+ARG BASE_IMAGE=srinivasyadav552/python:3.8
+FROM ${BASE_IMAGE}
 
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copy the requirements file
+# Copy only requirements first for better layer caching
 COPY requirements.txt .
 
-# Install the project dependencies
-RUN pip install -r requirements.txt
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the application code into the container
+# Copy the rest of the application code
 COPY . .
 
-# Expose the port the Flask application will be listening on
+# Expose the port your Flask app will run on
 EXPOSE 5000
 
-# Set environment variables, if necessary
-# ENV MY_ENV_VAR=value
+# Optional: Set environment variables if needed
+# ENV FLASK_ENV=production
 
-# Run the Flask application
+# Set the default command to run the Flask app
 CMD ["python", "app.py"]
